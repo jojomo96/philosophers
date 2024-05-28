@@ -15,7 +15,7 @@ HEADERS_DIR := include
 NAME := philosophers
 
 # Source files
-PHILO_SRCS := main.c 
+PHILO_SRCS := main.c input_parsing.c static_variables.c
 
 # Include directory for headers
 INCLUDES := -I$(LIB_INCLUDES) -I$(HEADERS_DIR)
@@ -40,7 +40,7 @@ define ASCII_HEADER
 ██████╔╝███████║██║██║     ██║   ██║███████╗██║   ██║██████╔╝███████║█████╗  ██████╔╝███████╗
 ██╔═══╝ ██╔══██║██║██║     ██║   ██║╚════██║██║   ██║██╔═══╝ ██╔══██║██╔══╝  ██╔══██╗╚════██║
 ██║     ██║  ██║██║███████╗╚██████╔╝███████║╚██████╔╝██║     ██║  ██║███████╗██║  ██║███████║
-╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 
 endef
 export ASCII_HEADER
@@ -62,7 +62,7 @@ $(NAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRC_DIR)/%.c $(HEADERS_DIR)/*.h
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ >/dev/null 2>&1
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	$(eval CURRENT=$(shell echo $$(($(CURRENT) + 1))))
 	$(eval PERCENT=$(shell echo $$((100 * $(CURRENT) / $(TOTAL)))))
 	$(eval HASHES=$(shell echo $$((50 * $(CURRENT) / $(TOTAL)))))
