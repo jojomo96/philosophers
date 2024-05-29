@@ -11,6 +11,9 @@ LIB_INCLUDES := $(LIB_DIR)/includes
 SRC_DIR := src
 HEADERS_DIR := include
 
+# Additional source directories
+SRC_DIRS := $(SRC_DIR) $(SRC_DIR)/utils
+
 # Library name
 NAME := philosophers
 
@@ -45,6 +48,9 @@ define ASCII_HEADER
 endef
 export ASCII_HEADER
 
+# VPATH
+vpath %.c $(SRC_DIRS)
+
 # Create obj directory and compile the project
 all: start_build $(NAME) #lib_make
 
@@ -60,7 +66,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@printf "$(GREEN)Philosophers project built.$(NC)\n"
 
-$(OBJDIR)/%.o: $(SRC_DIR)/%.c $(HEADERS_DIR)/*.h
+$(OBJDIR)/%.o: %.c $(HEADERS_DIR)/*.h
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	$(eval CURRENT=$(shell echo $$(($(CURRENT) + 1))))
