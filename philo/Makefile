@@ -15,7 +15,7 @@ HEADERS_DIR := include
 NAME := philosophers
 
 # Source files
-PHILO_SRCS := main.c input_parsing.c static_variables.c
+PHILO_SRCS := main.c input_parsing.c static_variables.c free.c
 
 # Include directory for headers
 INCLUDES := -I$(LIB_INCLUDES) -I$(HEADERS_DIR)
