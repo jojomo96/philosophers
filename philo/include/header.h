@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:27:26 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 09:27:31 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:22:57 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define HEADER_H
 
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
@@ -25,17 +26,17 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				meals;
-	long long				last_meal;
-	long long				time_to_die;
+	long long		last_meal;
+	pthread_t		dead_checker;
 	pthread_t		thread;
 }					t_philo;
 
 typedef struct s_data
 {
 	int				philo_count;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	__useconds_t	time_to_die;
+	__useconds_t	time_to_eat;
+	__useconds_t	time_to_sleep;
 	int				meal_count;
 	int				dead;
 	int				full;
@@ -55,6 +56,6 @@ long long			ft_get_time(void);
 long				ft_get_elapesed_time(long start_time);
 void				*ft_routine(void *id);
 void				ft_message(t_data *data, t_philo *philo, char *message);
-void	ft_usleep(__useconds_t usec, __useconds_t time_to_die, t_philo *philo, t_data *data);
-
+void				ft_usleep(__useconds_t usec, t_philo *philo, t_data *data);
+bool				ft_should_die(t_philo *philo, t_data *data);
 #endif

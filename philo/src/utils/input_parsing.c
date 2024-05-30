@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 09:21:57 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:51:51 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ int	ft_init_philo(t_data *data)
 		data->philos[i].meals = 0;
 		data->philos[i].last_meal = 0;
 		pthread_mutex_init(&data->forks[i], NULL);
-		pthread_create(&data->philos[i].thread, NULL, (void *)ft_routine,
-			&data->philos[i]);
+		if (pthread_create(&data->philos[i].thread, NULL, (void *)ft_routine,
+				&data->philos[i]))
+			return (1); // TODO: error
 		i++;
 	}
 	i = 0;
 	while (i < data->philo_count)
 	{
-		pthread_join(data->philos[i].thread, NULL);
+		pthread_join(data->philos[i].thread, NULL); // TODO: error
 		i++;
 	}
 	return (0);
