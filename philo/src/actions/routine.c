@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:11:12 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 11:36:54 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:43:36 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	*ft_dead_checker(void *arg)
 
 void	*ft_routine(void *arg)
 {
-	t_data *data;
-	t_philo *philo;
+	t_data	*data;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	data = ft_get_data();
