@@ -57,7 +57,7 @@ int	ft_parse_args(t_data *data, int argc, char **argv)
 	return (0);
 }
 
-int ft_init_philo(t_data *data)
+int	ft_init_philo(t_data *data)
 {
 	int	i;
 
@@ -70,10 +70,10 @@ int ft_init_philo(t_data *data)
 		data->philos[i].meals = 0;
 		data->philos[i].last_meal = 0;
 		pthread_mutex_init(&data->forks[i], NULL);
-		pthread_create(&data->philos[i].thread, NULL, (void *)ft_routine, &data->philos[i]);
+		pthread_create(&data->philos[i].thread, NULL, (void *)ft_routine,
+			&data->philos[i]);
 		i++;
 	}
-
 	i = 0;
 	while (i < data->philo_count)
 	{
@@ -98,5 +98,5 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	if (!data->forks)
 		return (free(data->philos), 1);
 	pthread_mutex_init(&data->print, NULL);
-	return ft_init_philo(data);
+	return (ft_init_philo(data));
 }

@@ -6,13 +6,13 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:18:48 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/29 14:24:42 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 08:54:12 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-long	ft_get_time(void)
+long long	ft_get_time(void)
 {
 	struct timeval	time;
 

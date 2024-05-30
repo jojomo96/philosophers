@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:52:20 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 08:29:50 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:03:58 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_sleep(t_philo *philo, t_data *data)
 {
-    ft_print_status(philo, "is sleeping");
-    usleep(data->time_to_sleep * 1000);
+	ft_message(data, philo, "is sleeping");
+	ft_usleep(data->time_to_sleep);
 }
