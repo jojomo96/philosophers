@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:27:26 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 08:54:45 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:27:31 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				meals;
-	int				last_meal;
+	long long				last_meal;
+	long long				time_to_die;
 	pthread_t		thread;
 }					t_philo;
 
@@ -54,6 +55,6 @@ long long			ft_get_time(void);
 long				ft_get_elapesed_time(long start_time);
 void				*ft_routine(void *id);
 void				ft_message(t_data *data, t_philo *philo, char *message);
-void				ft_usleep(__useconds_t usec);
+void	ft_usleep(__useconds_t usec, __useconds_t time_to_die, t_philo *philo, t_data *data);
 
 #endif

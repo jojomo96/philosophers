@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:11:12 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 09:05:00 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:25:11 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	*ft_routine(void *arg)
 	data = ft_get_data();
 	// if (philo->id % 2)
 	//     ft_usleep(100);
-	while (1)
+	while (!data->dead)
 	{
 		ft_think(philo, data);
-		if (data->meal_count != -1 && philo->meals >= data->meal_count)
+		if ((data->meal_count != -1 && philo->meals >= data->meal_count) || data->dead)
 			break ;
 		ft_sleep(philo, data);
 	}
