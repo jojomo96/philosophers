@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 11:22:40 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 08:21:15 by jojomo96         ###   ########.fr       */
+/*   Created: 2024/05/29 11:18:48 by jojomo96          #+#    #+#             */
+/*   Updated: 2024/05/29 14:24:42 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	ft_print_data(t_data *data)
+long	ft_get_time(void)
 {
-	printf("philo_count: %d\n", data->philo_count);
-	printf("time_to_die: %d\n", data->time_to_die);
-	printf("time_to_eat: %d\n", data->time_to_eat);
-	printf("time_to_sleep: %d\n", data->time_to_sleep);
-	printf("meal_count: %d\n", data->meal_count);
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	main(int argc, char **argv)
+long	ft_get_elapesed_time(long start_time)
 {
-	ft_init_data(ft_get_data(), argc, argv);
-	ft_print_data(ft_get_data());
-	ft_free_data(ft_get_data());
-	return (0);
+	return (ft_get_time() - start_time);
 }

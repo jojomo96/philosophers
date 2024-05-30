@@ -12,13 +12,13 @@ SRC_DIR := src
 HEADERS_DIR := include
 
 # Additional source directories
-SRC_DIRS := $(SRC_DIR) $(SRC_DIR)/utils
+SRC_DIRS := $(SRC_DIR) $(SRC_DIR)/utils $(SRC_DIR)/actions
 
 # Library name
 NAME := philosophers
 
 # Source files
-PHILO_SRCS := main.c input_parsing.c static_variables.c free.c
+PHILO_SRCS := main.c input_parsing.c static_variables.c free.c sleep.c think_and_eat.c time.c routine.c message.c
 
 # Include directory for headers
 INCLUDES := -I$(LIB_INCLUDES) -I$(HEADERS_DIR)

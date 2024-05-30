@@ -6,7 +6,7 @@
 /*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/29 09:59:37 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:47:39 by jojomo96         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,32 @@ int	ft_parse_args(t_data *data, int argc, char **argv)
 	return (0);
 }
 
+int ft_init_philo(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philo_count)
+	{
+		data->philos[i].id = i;
+		data->philos[i].left_fork = i;
+		data->philos[i].right_fork = (i + 1) % data->philo_count;
+		data->philos[i].meals = 0;
+		data->philos[i].last_meal = 0;
+		pthread_mutex_init(&data->forks[i], NULL);
+		pthread_create(&data->philos[i].thread, NULL, (void *)ft_routine, &data->philos[i]);
+		i++;
+	}
+
+	i = 0;
+	while (i < data->philo_count)
+	{
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_init_data(t_data *data, int argc, char **argv)
 {
 	if (ft_parse_args(data, argc, argv))
@@ -64,24 +90,13 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	data->dead = 0;
 	data->full = 0;
 	data->start = 0;
+	data->start_time = ft_get_time();
 	data->philos = malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
 		return (1);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
 	if (!data->forks)
-	{
-		free(data->philos);
-		return (1);
-	}
+		return (free(data->philos), 1);
 	pthread_mutex_init(&data->print, NULL);
-	for (int i = 0; i < data->philo_count; i++)
-	{
-		data->philos[i].id = i + 1;
-		data->philos[i].left_fork = i;
-		data->philos[i].right_fork = (i + 1) % data->philo_count;
-		data->philos[i].meals = 0;
-		data->philos[i].last_meal = 0;
-		pthread_mutex_init(&data->forks[i], NULL);
-	}
-	return (0);
+	return ft_init_philo(data);
 }
