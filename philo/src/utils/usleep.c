@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   usleep.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 08:33:40 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 11:37:36 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:48:56 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ bool	ft_should_die(t_philo *philo, t_data *data)
 		&& philo->meals != data->meal_count)
 	{
 		pthread_mutex_lock(&data->print);
-		printf("%lld %d died\n", current_time - data->start_time, philo->id);
+		if (!data->dead)
+			printf("%lld %d died\n", current_time - data->start_time, philo->id);
 		data->dead = 1;
 		pthread_mutex_unlock(&data->print);
 		return (true);
@@ -31,7 +32,7 @@ bool	ft_should_die(t_philo *philo, t_data *data)
 	return (false);
 }
 
-void	ft_usleep(__useconds_t usec, t_philo *philo, t_data *data)
+void	ft_usleep(useconds_t usec, t_philo *philo, t_data *data)
 {
 	long long	start;
 

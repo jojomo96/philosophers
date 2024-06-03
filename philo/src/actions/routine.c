@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:11:12 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 11:43:36 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:01:48 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,24 @@ void	*ft_dead_checker(void *arg)
 	return (NULL);
 }
 
+void	ft_wait_until_ready(t_data *data)
+{
+	pthread_mutex_lock(&data->ready_mutex);
+	data->ready++;
+	pthread_mutex_unlock(&data->ready_mutex);
+	while (1)
+	{
+		pthread_mutex_lock(&data->ready_mutex);
+		if (data->ready >= data->philo_count)
+		{
+			pthread_mutex_unlock(&data->ready_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&data->ready_mutex);
+		usleep(1);
+	}
+}
+
 void	*ft_routine(void *arg)
 {
 	t_data	*data;
@@ -36,8 +54,9 @@ void	*ft_routine(void *arg)
 	data = ft_get_data();
 	// if (philo->id % 2)
 	//     ft_usleep(100);
-	philo->last_meal = data->start_time;
 	pthread_create(&philo->dead_checker, NULL, ft_dead_checker, philo);
+	ft_wait_until_ready(data);
+	philo->last_meal = data->start_time;
 	// TODO:error
 	while (!data->dead)
 	{

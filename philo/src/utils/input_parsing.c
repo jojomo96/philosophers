@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 09:51:51 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:52:45 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	data->dead = 0;
 	data->full = 0;
 	data->start = 0;
+	data->ready = 0;
 	data->start_time = ft_get_time();
 	data->philos = malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
@@ -99,5 +100,6 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	if (!data->forks)
 		return (free(data->philos), 1);
 	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->ready_mutex, NULL);
 	return (ft_init_philo(data));
 }
