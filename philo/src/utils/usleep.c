@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 08:33:40 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/03 13:48:56 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:50:03 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ bool	ft_should_die(t_philo *philo, t_data *data)
 	if (time_since_last_meal >= data->time_to_die
 		&& philo->meals != data->meal_count)
 	{
-		pthread_mutex_lock(&data->print);
-		if (!data->dead)
-			printf("%lld %d died\n", current_time - data->start_time, philo->id);
-		data->dead = 1;
-		pthread_mutex_unlock(&data->print);
+		if (!ft_is_dead(data))
+		{
+			pthread_mutex_lock(&data->print);
+			printf("%lld %d died\n", current_time - data->start_time,
+				philo->id);
+			pthread_mutex_unlock(&data->print);
+		}
+		ft_set_dead(data);
 		return (true);
 	}
 	return (false);
@@ -39,8 +42,13 @@ void	ft_usleep(useconds_t usec, t_philo *philo, t_data *data)
 	start = ft_get_time();
 	while ((ft_get_time() - start) < usec)
 	{
+		pthread_mutex_lock(&philo->lock);
 		if (ft_should_die(philo, data))
+		{
+			pthread_mutex_unlock(&philo->lock);
 			break ;
+		}
+		pthread_mutex_unlock(&philo->lock);
 		usleep(usec / 10);
 	}
 }

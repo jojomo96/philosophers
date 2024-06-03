@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/03 13:52:45 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:48:28 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 		return (free(data->philos), 1);
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->ready_mutex, NULL);
+	pthread_mutex_init(&data->dead_mutex, NULL);
 	return (ft_init_philo(data));
 }

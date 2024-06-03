@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   think_and_eat.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:52:13 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 11:43:41 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:05:18 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ void	ft_droppting_forks(t_philo *philo, t_data *data)
 void	ft_eat(t_philo *philo, t_data *data)
 {
 	ft_message(data, philo, "is eating");
+	ft_usleep(data->time_to_eat, philo, data);
+	pthread_mutex_lock(&philo->lock);
 	philo->last_meal = ft_get_time();
 	philo->meals++;
-	ft_usleep(data->time_to_eat, philo, data);
+	pthread_mutex_unlock(&philo->lock);
 }
 
 void	ft_think(t_philo *philo, t_data *data)

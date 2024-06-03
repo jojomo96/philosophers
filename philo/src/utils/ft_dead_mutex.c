@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message.c                                          :+:      :+:    :+:   */
+/*   ft_dead_mutex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 08:22:54 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/03 14:31:01 by jmoritz          ###   ########.fr       */
+/*   Created: 2024/06/03 14:29:49 by jmoritz           #+#    #+#             */
+/*   Updated: 2024/06/03 14:34:42 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	ft_message(t_data *data, t_philo *philo, char *message)
+bool	ft_is_dead(t_data *data)
 {
-	pthread_mutex_lock(&data->print);
-	if (ft_is_dead(data))
+	pthread_mutex_lock(&data->dead_mutex);
+	if (data->dead)
 	{
-		pthread_mutex_unlock(&data->print);
-		return ;
+		pthread_mutex_unlock(&data->dead_mutex);
+		return (true);
 	}
-	printf("%lld %d %s\n", ft_get_time() - data->start_time, philo->id,
-		message);
-	pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(&data->dead_mutex);
+	return (false);
+}
+
+void	ft_set_dead(t_data *data)
+{
+	pthread_mutex_lock(&data->dead_mutex);
+	data->dead = 1;
+	pthread_mutex_unlock(&data->dead_mutex);
 }
