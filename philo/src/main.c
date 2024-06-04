@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:22:40 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 15:53:57 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:01:31 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_print_data(t_data *data)
 int	main(int argc, char **argv)
 {
 	ft_init_data(ft_get_data(), argc, argv);
-	// ft_print_data(ft_get_data());
 	ft_free_data(ft_get_data());
 	return (0);
 }

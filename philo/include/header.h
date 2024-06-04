@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:27:26 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 15:48:22 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:14:53 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ void				ft_usleep(useconds_t usec);
 bool				ft_should_die(t_philo *philo, t_data *data);
 bool				ft_is_dead(t_data *data);
 void				ft_set_dead(t_data *data);
+void				ft_check_philosopher_status(t_data *data);
+int					ft_mutex_init(void);
 
 #endif

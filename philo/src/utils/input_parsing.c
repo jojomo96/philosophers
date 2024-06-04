@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 18:49:25 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:17:43 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,60 +50,28 @@ int	ft_parse_args(t_data *data, int argc, char **argv)
 		data->meal_count = ft_atoi(argv[5]);
 	else
 		data->meal_count = -1;
-	// if (data->philo_count < 2 || data->time_to_die < 60
-	//     || data->time_to_eat < 60 || data->time_to_sleep < 60
-	//     || (argc == 6 && data->meal_count < 1))
-	//     return (1);
+	if (data->philo_count < 1 || data->time_to_die < 1 || data->time_to_eat < 1
+		|| data->time_to_sleep < 1 || (argc == 6 && data->meal_count < -1))
+		return (1);
 	return (0);
 }
 
-void ft_check_allive(t_data *data)
+static void	initialize_philosopher(t_data *data, int i)
 {
-	int	i;
-
-	while (true)
-	{
-		i = 0;
-		while (i < data->philo_count)
-		{
-			pthread_mutex_lock(&data->philos[i].lock);
-			if (ft_should_die(&data->philos[i], data))
-			{
-				pthread_mutex_unlock(&data->philos[i].lock);
-				return ;
-			}
-			pthread_mutex_unlock(&data->philos[i].lock);
-
-			i++;
-		}
-		pthread_mutex_lock(&data->full_mutex);
-		if (data->full >= data->philo_count)
-		{
-			ft_set_dead(data);
-			pthread_mutex_unlock(&data->full_mutex);
-			return ;
-		}
-		pthread_mutex_unlock(&data->full_mutex);
-			usleep(100);
-	}
+	data->philos[i].id = i;
+	data->philos[i].left_fork = i;
+	data->philos[i].right_fork = (i + 1) % data->philo_count;
+	data->philos[i].meals = 0;
+	data->philos[i].last_meal = data->start_time;
 }
 
-int	ft_init_philo(t_data *data)
+int	ft_init_philos(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->philo_count)
-	{
-		data->philos[i].id = i;
-		data->philos[i].left_fork = i;
-		data->philos[i].right_fork = (i + 1) % data->philo_count;
-		data->philos[i].meals = 0;
-		data->philos[i].last_meal = data->start_time;
-		pthread_mutex_init(&data->forks[i], NULL);
-		pthread_mutex_init(&data->philos[i].lock, NULL);
-		i++;
-	}
+		initialize_philosopher(data, i++);
 	i = 0;
 	while (i < data->philo_count)
 	{
@@ -112,15 +80,10 @@ int	ft_init_philo(t_data *data)
 			return (1); // TODO: error
 		i++;
 	}
-
-	ft_check_allive(data);
-
+	ft_check_philosopher_status(data);
 	i = 0;
 	while (i < data->philo_count)
-	{
-		pthread_join(data->philos[i].thread, NULL); // TODO: error
-		i++;
-	}
+		pthread_join(data->philos[i++].thread, NULL); // TODO: error
 	return (0);
 }
 
@@ -136,12 +99,7 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	data->philos = malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
 		return (1);
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
-	if (!data->forks)
-		return (free(data->philos), 1);
-	pthread_mutex_init(&data->print, NULL);
-	pthread_mutex_init(&data->ready_mutex, NULL);
-	pthread_mutex_init(&data->dead_mutex, NULL);
-	pthread_mutex_init(&data->full_mutex, NULL);
-	return (ft_init_philo(data));
+	if(ft_mutex_init())
+		return (1);
+	return (ft_init_philos(data));
 }
