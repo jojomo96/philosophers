@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 08:33:40 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 16:11:42 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:37:08 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ bool	ft_should_die(t_philo *philo, t_data *data)
 
 	current_time = ft_get_time();
 	time_since_last_meal = current_time - philo->last_meal;
-	if (time_since_last_meal >= data->time_to_die)
+	if (time_since_last_meal > data->time_to_die)
 	{
 		if (!ft_is_dead(data))
 		{
+			ft_set_dead(data);
 			pthread_mutex_lock(&data->print);
 			printf("%lld %d died\n", current_time - data->start_time,
-				philo->id);
-
+				philo->id + 1);
 			pthread_mutex_unlock(&data->print);
 		}
-		ft_set_dead(data);
 		return (true);
 	}
 	return (false);
