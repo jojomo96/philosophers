@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 13:41:36 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:21:34 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,39 @@ int	ft_parse_args(t_data *data, int argc, char **argv)
 	return (0);
 }
 
+void ft_check_allive()
+{
+	int	i;
+	t_data	*data;
+
+	data = ft_get_data();
+
+	while (true)
+	{
+		i = 0;
+		while (i < data->philo_count)
+		{
+			pthread_mutex_lock(&data->philos[i].lock);
+			if (ft_should_die(&data->philos[i], data))
+			{
+				pthread_mutex_unlock(&data->philos[i].lock);
+				return ;
+			}
+			pthread_mutex_unlock(&data->philos[i].lock);
+			i++;
+			pthread_mutex_lock(&data->full_mutex);
+			if (data->full >= data->philo_count)
+			{
+				ft_set_dead(data);
+				pthread_mutex_unlock(&data->full_mutex);
+				return ;
+			}
+			pthread_mutex_unlock(&data->full_mutex);
+			usleep(1000);
+		}
+	}
+}
+
 int	ft_init_philo(t_data *data)
 {
 	int	i;
@@ -68,7 +101,7 @@ int	ft_init_philo(t_data *data)
 		data->philos[i].left_fork = i;
 		data->philos[i].right_fork = (i + 1) % data->philo_count;
 		data->philos[i].meals = 0;
-		data->philos[i].last_meal = 0;
+		data->philos[i].last_meal = data->start_time;
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
@@ -80,6 +113,10 @@ int	ft_init_philo(t_data *data)
 			return (1); // TODO: error
 		i++;
 	}
+
+	ft_check_allive();
+
+
 	i = 0;
 	while (i < data->philo_count)
 	{

@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 08:33:40 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 13:32:03 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:11:42 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,13 @@ bool	ft_should_die(t_philo *philo, t_data *data)
 	return (false);
 }
 
-void	ft_usleep(useconds_t usec, t_philo *philo, t_data *data)
+void	ft_usleep(useconds_t usec)
 {
 	long long	start;
-
-	(void)data;
-	(void)philo;
 
 	start = ft_get_time();
 	while ((ft_get_time() - start) < usec)
 	{
-		// pthread_mutex_lock(&philo->lock);
-		// if (ft_should_die(philo, data))
-		// {
-		// 	pthread_mutex_unlock(&philo->lock);
-		// 	break ;
-		// }
-		// pthread_mutex_unlock(&philo->lock);
-		usleep(usec / 10);
+		usleep(100);
 	}
 }

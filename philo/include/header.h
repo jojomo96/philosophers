@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:27:26 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/03 16:23:12 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 15:48:22 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ long long			ft_get_time(void);
 long				ft_get_elapesed_time(long start_time);
 void				*ft_routine(void *id);
 void				ft_message(t_data *data, t_philo *philo, char *message);
-void				ft_usleep(useconds_t usec, t_philo *philo, t_data *data);
+void				ft_usleep(useconds_t usec);
 bool				ft_should_die(t_philo *philo, t_data *data);
 bool				ft_is_dead(t_data *data);
 void				ft_set_dead(t_data *data);
