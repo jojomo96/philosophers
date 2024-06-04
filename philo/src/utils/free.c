@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojomo96 <jojomo96@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:05:55 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/05/30 11:44:18 by jojomo96         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:54:54 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ void	ft_free_data(t_data *data)
 	while (i < data->philo_count)
 	{
 		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->philos[i].lock);
 		i++;
 	}
 	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->dead_mutex);
+	pthread_mutex_destroy(&data->full_mutex);
 	free(data->philos);
 	free(data->forks);
 	free(data);
