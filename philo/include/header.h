@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:27:26 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/03 15:48:08 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/03 16:23:12 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	full_mutex;
 }					t_data;
 
 int					ft_init_data(t_data *data, int argc, char **argv);

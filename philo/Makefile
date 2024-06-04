@@ -2,7 +2,7 @@
 CC := cc
 
 # Compiler flags
-CFLAGS := -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS := -Wall -Wextra -Werror -g #-fsanitize=thread
 
 # Directories
 OBJDIR := obj
@@ -15,7 +15,7 @@ HEADERS_DIR := include
 SRC_DIRS := $(SRC_DIR) $(SRC_DIR)/utils $(SRC_DIR)/actions
 
 # Library name
-NAME := philosophers
+NAME := philo
 
 # Source files
 PHILO_SRCS := main.c input_parsing.c static_variables.c free.c sleep.c think_and_eat.c time.c routine.c message.c usleep.c ft_dead_mutex.c
@@ -43,7 +43,7 @@ define ASCII_HEADER
 ██████╔╝███████║██║██║     ██║   ██║███████╗██║   ██║██████╔╝███████║█████╗  ██████╔╝███████╗
 ██╔═══╝ ██╔══██║██║██║     ██║   ██║╚════██║██║   ██║██╔═══╝ ██╔══██║██╔══╝  ██╔══██╗╚════██║
 ██║     ██║  ██║██║███████╗╚██████╔╝███████║╚██████╔╝██║     ██║  ██║███████╗██║  ██║███████║
-╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 
 endef
 export ASCII_HEADER
