@@ -6,7 +6,7 @@
 /*   By: jmoritz < jmoritz@student.42heilbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 20:01:04 by jojomo96          #+#    #+#             */
-/*   Updated: 2024/06/04 19:17:43 by jmoritz          ###   ########.fr       */
+/*   Updated: 2024/06/04 21:58:42 by jmoritz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_atoi(const char *str)
 	i = 0;
 	sign = 1;
 	nbr = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -51,7 +51,7 @@ int	ft_parse_args(t_data *data, int argc, char **argv)
 	else
 		data->meal_count = -1;
 	if (data->philo_count < 1 || data->time_to_die < 1 || data->time_to_eat < 1
-		|| data->time_to_sleep < 1 || (argc == 6 && data->meal_count < -1))
+		|| data->time_to_sleep < 1 || (argc == 6 && data->meal_count < 1))
 		return (1);
 	return (0);
 }
@@ -77,13 +77,16 @@ int	ft_init_philos(t_data *data)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL, (void *)ft_routine,
 				&data->philos[i]))
-			return (1); // TODO: error
+		{
+			ft_set_dead(data);
+			break ;
+		}
 		i++;
 	}
 	ft_check_philosopher_status(data);
 	i = 0;
 	while (i < data->philo_count)
-		pthread_join(data->philos[i++].thread, NULL); // TODO: error
+		pthread_join(data->philos[i++].thread, NULL);
 	return (0);
 }
 
@@ -99,7 +102,7 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	data->philos = malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
 		return (1);
-	if(ft_mutex_init())
+	if (ft_mutex_init())
 		return (1);
 	return (ft_init_philos(data));
 }
